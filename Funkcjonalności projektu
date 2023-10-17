@@ -1,0 +1,25 @@
+Użytkownik
+	-rejestracja, 
+  -przypomnienie/zmiana hasła
+	-usunięcie konta
+	-rezerwacja dostępnych ofert
+	-wystawianie nowych ofert
+	-ocenianie zarezerwowanych ofert
+
+Oferty
+	-Opis, zdjęcia, podstawowe informacje
+	-oceny, komentarze
+	-zarządzanie ceną/ dostępnością przez autora
+	-mapa z lokalizacją
+
+Wyszukiwarka
+	-na podstawie tagów
+	-filtrowanie
+	-miejscowość, data, liczba osób dorosłych i dzieci
+
+Na stronie głównej:
+	-motyw ciemny/jasny
+	-wybór języka
+-Ostatnie wyszukiwania
+-Najpopularniejsze
+-Zniżki
