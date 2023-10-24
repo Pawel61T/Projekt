@@ -1,0 +1,14 @@
+założenia projektowe
+- stworzenie serwisu do rezerwacji różnego rodzaju nieruchomości typu:
+  - domy wakacyjne
+  - pokoje hotelowe
+  - lokale komercyjne
+- podstawowe bezpieczeństwo danych użytkowników
+- intuicyjny i czytelny interfejs
+- responzywność
+Ewentualne założenia
+- odpornośc na ataki
+- rozwoj w miarę zwiększania zasięgu:
+  - model biznesowy oparty na prowizjach od tranzakcji
+  - opcje tranzakcji online dla uzytkowników
+  - sporządzenie umowy między użytkownikami a serwisem
