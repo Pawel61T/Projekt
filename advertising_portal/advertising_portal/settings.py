@@ -40,7 +40,12 @@ INSTALLED_APPS = [
     #new apps here
     'main',
     'users',
+    #external apps
+    "phonenumber_field",
 ]
+
+AUTH_USER_MODEL = 'users.User'
+#ACCOUNT_AUTHENTICATION_METHOD ='email'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
