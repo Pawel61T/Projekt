@@ -4,9 +4,14 @@
     </div>  
     <nav>
       <ul>
-        <li><a href="/user/signin/">Sign in</a></li> 
-        <li><a href="/user/signup/">Sign up</a></li> 
-        <li><a href="/user/logout">Log out</a></li> 
+        {%if request.user.is_authenticated %}
+         <li><a href="/user/logout">Log out</a></li> 
+         <span>Hi {{ request.user.username }}</span>
+        {%else%}
+          <li><a href="/user/signin/">Sign in</a></li> 
+          <li><a href="/user/signup/">Sign up</a></li> 
+        {%endif%}
       </ul>
     </nav>
+    {% include 'messages.html' %}
   </header>

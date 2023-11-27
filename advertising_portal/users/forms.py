@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import User
+from django.core import validators
 
 class SignupForm(UserCreationForm):
     email = forms.EmailField(max_length=200, help_text='Required')
@@ -10,5 +11,6 @@ class SignupForm(UserCreationForm):
         fields = ('email', 'first_name', 'last_name', 'password1', 'password2', 'phone_number', 'description')
 
 class SigninForm(forms.Form):
-    email = forms.EmailField(max_length=65, required=True)
-    password = forms.CharField(max_length=65, widget=forms.PasswordInput)
+    email = forms.EmailField(max_length=65, required=True, error_messages = { 'required':"Please Enter your email."})
+    password = forms.CharField(max_length=65, widget=forms.PasswordInput, 
+                               error_messages = { 'required':"Please Enter your password."})
