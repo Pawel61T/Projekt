@@ -12,8 +12,6 @@ from rest_framework.decorators import api_view, permission_classes
 import json
 
 # Create your views here.
-
-
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
