@@ -1,17 +1,51 @@
 <header>
-    <div>
-      <h1><a href ='/'>Advertising Portal</a></h1>
-    </div>  
-    <nav>
-      <ul>
-        {%if request.user.is_authenticated %}
-         <li><a href="/user/logout">Log out</a></li> 
-         <span>Hi {{ request.user.username }}</span>
-        {%else%}
-          <li><a href="/user/signin/">Sign in</a></li> 
-          <li><a href="/user/signup/">Sign up</a></li> 
-        {%endif%}
-      </ul>
-    </nav>
-    {% include 'messages.html' %}
+    <div class="container-fluid px-0">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary fw-bold">
+          <a class="navbar-brand text-bold" href="/"><i class="bi bi-house-fill bg-primary"
+            style="font-size: 2rem; color: rgb(255, 210, 48);"></i><b></b></a>
+
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                  <li class="nav-item active">
+                      <a class="nav-link text-bold text-white" href="/"> Home</a>
+                  </li>
+                  {%if request.user.is_authenticated %}
+                  <li class="nav-item active">
+                      <a class="nav-link text-bold text-white" href="/main/user_offerts">Offerts</a>
+                  </li>
+                  <li class="nav-item active">
+                          <a class="nav-link text-bold text-white" href="">My Bookings</a>
+                      </li>
+                  <li class="nav-item active">
+                          <a class="nav-link text-bold text-white" href="">Client Bookings </a>
+                      </li>
+                  {% endif %}
+                 
+              </ul>
+              
+          </div>
+          {% if user.is_authenticated %}
+                    <button class="btn btn-group bg-light float-right" data-toggle="modal" role="contentinfo">
+                      Hello, {{request.user}}
+                    </button>
+                    <a class="nav-link text-bold text-white" href="/user/update_profile/">Edit profile</a>
+                    <a href="/user/logout" class="nav-link float-right">
+                    <button class="btn btn-group bg-warning" data-toggle="modal">
+                      Logout
+                    </button>
+                  </a>
+              {% else %}
+              <a href="/user/signin/" class="nav-link float-right">
+                  <button class="btn btn-group bg-warning font-weight-bold">
+                      Login
+                  </button>
+              </a>
+              <a href="/user/signup/" class="nav-link float-right">
+                <button class="btn btn-group bg-warning font-weight-bold">
+                    Register
+                </button>
+            </a>
+              {% endif %}
+      </nav>
+  </div>
   </header>

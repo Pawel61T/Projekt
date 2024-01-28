@@ -1,11 +1,13 @@
 Użytkownik
 	-rejestracja, 
   	-przypomnienie/zmiana hasła
+	-logowanie
 	-usunięcie konta
+	-edycja konta
 	-rezerwacja dostępnych ofert
-	-wystawianie nowych ofert
-	-ocenianie zarezerwowanych ofert
-
+	-wystawianie nowych ofert(crud)
+	-ocenianie zarezerwowanych ofert(crud)
+	-dodawanie zdjęcia dla użytkownika
 Oferty
 	-Opis, zdjęcia, podstawowe informacje
 	-oceny, komentarze

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}
+    Main Page
+{% endblock title %}
+
+{% block body %}
+    <div class="row mt-5">
+        <div class="col-md-auto">
+            {% for offert in offerts%}
+                
+                    <figure class="col-md-auto figure">
+                        {% if offert.img %}
+                        <img class="figure-img" src="{{ offert.img.url }}" alt="Offert image" 
+                             style="width: 400px; height: 350px"/>
+                        {% else %}
+                            <img class="figure-img" src="/static/no_image.webp" alt="Offert image" 
+                                style="width: 400px; height: 350px"/>
+                       
+                        {% endif %}
+                        <figcaption class="figure-caption" style="width:300px">
+                            <div class="container fs-5">
+                                <div class="row">
+                                    {% if offert.offer_type == "1" %}
+                                    <div class="col-sm">
+                                        Type: Room
+                                    </div>
+                                    {% endif %}
+                                    {% if offert.offer_type == "2" %}
+                                    <div class="col-sm">
+                                        Type: Local
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm">
+                                      Price: {{ offert.price }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-auto" style="display:block">
+                                        Size: {{ offert.size }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    {% if offert.offer_type == "1" %}
+                                    <div class="col-sm">
+                                        Capacity: {{ offert.capacity }}
+                                    </div>
+                                    {% endif %}
+                                    {% if offert.offer_type == "2" %}
+                                    <div class="col-sm">
+                                        Rooms number: {{ offert.number_of_rooms }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col text-center">
+                                        <a class="float-center btn btn-primary w-50" href="{% url 'offert_details' offert.id %}">View details</a>
+                                
+                                    </div>        
+                                </div>
+                            </div>
+                        </figcaption>
+                    </figure>
+            {% endfor%}  
+        </div>
+    </div>
+{% endblock body %}

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}
+    Offerts
+{% endblock title %}
+
+{% block body %}
+
+<form method="get">
+    <a class="btn btn-primary mt-3 mb-3" href="/main/add_offert/">Add offert</a>
+    <h2>Your offerts</h2>
+    <br/>
+    <h3>Rooms</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width: 5%">Id</th>
+                <th style="width: 15%">Offert type</th>
+                <th style="width: 15%">Price</th>
+                <th style="width: 15%">Size</th>
+                <th style="width: 10%">Capacity</th>
+                <th style="width: 10%">Address</th>
+                <th style="width: 20%">Manage</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for offert in offerts %}
+        {% if offert.offer_type == "1" %}
+            <tr>
+                <td>{{ offert.id }}</td>
+                <td>Room</td>
+                <td>{{ offert.price }}</td>
+                <td>{{ offert.size }}</td>
+                <td>{{ offert.capacity }}</td>
+                <td>{{ offert.address1 }}</td>
+                <td> 
+                    <a class="btn btn-success" href="{% url 'user_offert_detail' offert.id %}">Details</a>
+                    <a class="btn btn-primary" href= "{% url 'edit_offert' offert.id %}"">Edit</a> 
+                    <a class="btn btn-danger" href="{% url 'delete_offert' offert.id %}" onclick="return confirm('Are you sure you want to delete?');">Delete</a>
+                </td>
+            </tr>
+        {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+    <br/>
+
+    <h3>Locals</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width: 5%">Id</th>
+                <th style="width: 15%">Offert type</th>
+                <th style="width: 15%">Price</th>
+                <th style="width: 15%">Size</th>
+                <th style="width: 10%">Rooms number</th>
+                <th style="width: 10%">Address</th>
+                <th style="width: 20%">Manage</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for offert in offerts %}
+        {% if offert.offer_type == "2" %}
+            <tr>
+                <td>{{ offert.id }}</td>
+                <td>Local</td>
+                <td>{{ offert.price }}</td>
+                <td>{{ offert.size }}</td>
+                <td>{{ offert.number_of_rooms }}</td>
+                <td>{{ offert.address1 }}</td>
+                <td> 
+                    <a class="btn btn-success" href="{% url 'user_offert_detail' offert.id %}">Details</a>
+                    <a class="btn btn-primary" href="{% url 'edit_offert' offert.id %}">Edit</a> 
+                    <a class="btn btn-danger" href="{% url 'delete_offert' offert.id %}" onclick="return confirm('Are you sure you want to delete?');">Delete</a>
+                </td>
+            </tr>
+        {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+</form>
+{% endblock body%}

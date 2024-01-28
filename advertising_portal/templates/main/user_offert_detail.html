@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %}
+    Offert info
+{% endblock title %}
+
+{% block body %}
+<div class="text-center">
+<h2>Offert</h2>
+{% if offert.img %}
+<img class="figure-img" src="{{ offert.img.url }}" alt="Offert image" style="width: 400px; height: 350px"/>
+{% else %}
+<img class="figure-img" src="/static/no_image.webp" alt="Offert image" style="width: 400px; height: 350px"/>
+{% endif %}
+</div>
+<div class="container break-text">
+    <div class="row fw-bolder" style="font-size: x-large;">
+      <div class="col">
+      </div>
+      <div class="col">
+        Offert information
+      </div>
+    </div>
+    <div class="row">
+        <div class="col left">
+            Type:
+        </div>
+        <div class="col">
+            {% if offert.offer_type == "1" %}
+            Room
+            {% else %}
+            Local
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col left">
+            Price:
+        </div>
+        <div class="col">
+          {{offert.price}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col left">
+            Size:
+        </div>
+        <div class="col">
+          {{offert.size}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col left">
+            {% if offert.offer_type == "1" %}
+            Capacity:
+            {% else %}
+            Number of rooms:
+            {% endif %}
+        </div>
+        <div class="col">
+            {% if offert.offer_type == "1" %}
+            {{offert.capacity}}
+            {% else %}
+            {{offert.number_of_rooms}}
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col left">
+            Description:
+        </div>
+        <div class="col text-break">
+          {{offert.description}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col left">
+            Address:
+        </div>
+        <div class="col text-break">
+            {{ offert.address1 }} 
+            {% if offert.address2 %} {{ offert.address2 }} {% endif %}
+            , {{offert.city}}, {{ offert.country}} 
+        </div>
+    </div>
+  </div>
+{% endblock body%}

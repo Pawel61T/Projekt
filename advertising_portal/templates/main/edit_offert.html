@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}
+    Edit offert
+{% endblock title %}
+
+{% block body %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h2>Edit offert</h2>
+    {{ form.as_p }}
+    <button class="btn btn-primary" type="submit">Edit</button>
+</form>
+{% endblock body%}
