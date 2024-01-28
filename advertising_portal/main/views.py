@@ -6,9 +6,41 @@ from django.contrib.auth.decorators import login_required
 from users.models import User
 
 # Create your views here.
+def is_valid_queryparam(param):
+    return param != '' and param is not None
+
 def GetOffers(request):
-    offerts = Offer.objects.all()
-    return render(request, 'main/main.html', {'offerts': offerts})
+    type = request.GET.get('type_select')
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    capacity_in = request.GET.get('capacity')
+    min_size = request.GET.get('min_size')
+    max_size = request.GET.get('max_size')
+    number_of_rooms_in = request.GET.get('number_of_rooms')
+    
+    qs = Offer.objects.all()
+    if is_valid_queryparam(type) and type != "0":
+        qs = qs.filter(offer_type = type)
+
+    if is_valid_queryparam(min_price):
+        qs = qs.filter(price__gte=min_price)
+        
+    if is_valid_queryparam(max_price):
+        qs = qs.filter(price__lt = max_price)
+
+    if is_valid_queryparam(min_size):
+        qs = qs.filter(size__gte=min_size)
+    
+    if is_valid_queryparam(max_size):
+        qs = qs.filter(size__lt = max_size)
+
+    if is_valid_queryparam(capacity_in):
+        qs = qs.filter(capacity = capacity_in)
+
+    if is_valid_queryparam(number_of_rooms_in):
+        qs = qs.filter(number_of_rooms = number_of_rooms_in)
+    
+    return render(request, 'main/main.html', {'offerts': qs})
     #return render(request, 'main.html', {'offers': offers, 'logged': logged, 'username': username})
 
 @login_required()

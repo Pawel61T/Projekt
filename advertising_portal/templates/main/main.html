@@ -4,7 +4,51 @@
 {% endblock title %}
 
 {% block body %}
-    <div class="row mt-5">
+<div class="container-fluid py-3 px-3 ">
+    <form action="" method="GET">
+    {% csrf_token %}
+    <div class="row justify-content-center py-3 bg-light">
+        <div class="col-lg-1">
+            <label for="type_select">Type</label>
+            <select class="form-control" name="type_select" id="type_id">
+                <option value="0">Type</option>    
+                <option value="1">Room</option>
+                <option value="2">Local</option>    
+            </select>
+        </div>
+        <div class="col-lg-1">
+            <label for="min_price">Min price</label>
+            <input class="form-control mr-sm-2" type="number" placeholder="Min price" name="min_price" aria-label="Search">
+        </div>
+        <div class="col-lg-1">
+            <label for="max_price">Max price</label>
+            <input class="form-control mr-sm-2" type="number" placeholder="Max price" name="max_price" aria-label="Search">
+        </div>
+        <div class="col-lg-1">
+            <label for="capacity_select">Person</label>
+            <input class="form-control mr-sm-2" type="number" placeholder="Person" name="capacity" aria-label="Search">
+        </div>
+        <div class="col-lg-1">
+            <label for="min_size">Min size</label>
+            <input class="form-control mr-sm-2" type="number" placeholder="Min size" name="min_size" aria-label="Search">
+        </div>
+        <div class="col-lg-1">
+            <label for="max_size">Max size</label>
+            <input class="form-control mr-sm-2" type="number" placeholder="Max size" name="max_size" aria-label="Search">
+        </div>
+        <div class="col-lg-1">
+            <label for="number_of_rooms">Rooms number</label>
+            <input class="form-control mr-sm-2" type="number" placeholder="Rooms nr" name="number_of_rooms" aria-label="Search">
+        </div>
+        <div class="col-lg-1">
+            <input type="submit" value="Filter" class="form-control mr-sm-2 btn btn-primary my-4" style="position: relative;">
+        </div>
+    </div>
+</form>
+
+</div>
+</section>
+    <div class="row mt-3">
         <div class="col-md-auto">
             {% for offert in offerts%}
                 
