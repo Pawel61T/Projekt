@@ -4,12 +4,14 @@
 {% endblock title %}
 
 {% block body %}
-
+<div class="container d-flex justify-content-center mt-5">
 <form method="POST">
 	{% csrf_token %}
 	<h2>Login</h2>
 	{{form.as_p}}
-	<button type="submit">Login</button>
+	<button class="btn btn-primary" type="submit">Login</button>
+	<br/>
     <a href="/user/signup">Dont have an account? Create.</a>
 </form>
+</div>
 {% endblock body %}

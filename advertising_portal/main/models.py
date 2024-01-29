@@ -26,3 +26,11 @@ class Offer(models.Model):
     country = CountryField(blank_label="(select country)")
     user = models.ForeignKey(User, on_delete=models.CASCADE, null = True)
     REQUIRED_FIELDS = ['price', 'size']
+
+
+class Opinion(models.Model):
+    comment = models.TextField(max_length=200)
+    rating = models.IntegerField(default = 5, validators = [MinValueValidator(1), MaxValueValidator(5)])
+    date = models.DateTimeField(auto_now_add=True)
+    autor = models.ForeignKey(User, on_delete=models.CASCADE)
+    offert = models.ForeignKey(Offer, on_delete=models.CASCADE)

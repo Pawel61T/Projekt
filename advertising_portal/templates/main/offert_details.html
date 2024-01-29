@@ -40,7 +40,7 @@
             Name, Surname:
         </div>
         <div class="col">
-          {{user.first_name}} {{user.last_name}} 
+          {{offert.user.first_name}} {{offert.user.last_name}} 
         </div>
     </div>
     <div class="row">
@@ -54,7 +54,7 @@
             Mail:
         </div>
         <div class="col">
-          {{user.email}}
+          {{offert.user.email}}
         </div>
     </div>
     <div class="row">
@@ -68,7 +68,7 @@
             Phone number:
         </div>
         <div class="col">
-          {{user.phone_number}}
+          {{offert.user.phone_number}}
         </div>
     </div>
     <div class="row">
@@ -90,7 +90,7 @@
             Description:
         </div>
         <div class="col">
-          {{user.description}}
+          {{offert.user.description}}
         </div>
     </div>
     <div class="row">
@@ -120,4 +120,52 @@
         </div>
     </div>
   </div>
+
+<section class="text-center mt-5 mb-5 d-flex justify-content-center">
+  {%if request.user.is_authenticated %}
+  <div class="shadow-lg bg-white rounded w-50 p-3">
+    {% csrf_token %}
+            <h4 class="mb-1">Add comment</h4>
+            <span onclick="gfg(1)"
+                  class="star">★
+            </span>
+            <span onclick="gfg(2)"
+                  class="star">★
+            </span>
+            <span onclick="gfg(3)"
+                  class="star">★
+            </span>
+            <span onclick="gfg(4)"
+                  class="star">★
+            </span>
+            <span onclick="gfg(5)"
+                  class="star">★
+            </span>
+            <h5 id="output">
+                  Rating is: 0/5
+            </h5>
+            <label class="mt-2" for="comment">Comment:</label> <br/>
+            <textarea class="w-75 comment-text" id="comment" name="comment" required></textarea><br/>
+            <button class="btn btn-dark w-10 mt-2 save-opinion" type="button" 
+                    data-csrf="{{ csrf_token }}" data-offert="{{ offert.id }}">
+              Submit Comment
+            </button>
+  </div>   
+  {%endif%}
+</section> 
+<div class="opinion-wrapper">
+{% if comments %}
+{% for comment in comments %}
+  <div class="card mb-2 mt-2">
+    <div class="card-body">
+        <p style="font-size: 1.3rem;">{{comment.comment}}</p>
+        <p>
+          <b>Added by:</b> {{comment.autor}} on {{comment.date}}<br/>
+          <b>Rating:</b> {{comment.rating}}/5
+        </p>
+    </div>
+  </div>
+{% endfor %}
+</div>
+{%endif%} 
 {% endblock body%}

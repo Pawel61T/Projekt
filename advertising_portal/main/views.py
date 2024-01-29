@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
-from .models import Offer
+from .models import Offer, Opinion
 from .forms import AddOffertForm, EditOfferForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from users.models import User
+from django.http import JsonResponse
 
 # Create your views here.
 def is_valid_queryparam(param):
@@ -84,11 +85,31 @@ def delete_offert(request, offert_id):
     return redirect("/main/user_offerts")
 
 def offert_details(request, offert_id):
-    offert = Offer.objects.get(pk=offert_id)
-    if(offert.user_id):
-        user = User.objects.get(id=offert.user_id)
-    return render(request, 'main/offert_details.html', {'offert': offert, 'user': user})
+    if request.method == 'GET':
+        offert_in = Offer.objects.get(pk=offert_id)
+        opinions = Opinion.objects.filter(offert = offert_in) 
+    return render(request, 'main/offert_details.html', {'offert': offert_in, 'comments': opinions})
 
 def user_offert_detail(request, offert_id):
     offert = Offer.objects.get(pk=offert_id)
     return render(request, 'main/user_offert_detail.html', {'offert': offert})
+
+def save_opinion(request):
+    if request.method == 'POST':
+        comment_in = request.POST['comment']
+        rating_in = request.POST['rating']
+        offert_id = request.POST['offert_id']
+        user_in = request.user
+        offert_in = Offer.objects.get(pk=offert_id)
+        rating_in = int(rating_in)
+        if(rating_in == 0 or comment_in == ''):
+            print(rating_in)
+            return JsonResponse({'bool': False})
+        else:
+            Opinion.objects.create(
+            comment=comment_in,
+            rating=rating_in,
+            offert=offert_in,
+            autor=user_in
+        )
+        return JsonResponse({'bool':True, 'user_name': request.user.first_name, 'user_surname': request.user.last_name})

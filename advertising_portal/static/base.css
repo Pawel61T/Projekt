@@ -3,10 +3,11 @@
     padding: 0.75rem 1.25rem;
     margin-bottom: 1rem;
     margin-top: 1rem;
+    text-align: center;
     border: 1px solid transparent;
     border-radius: 0.25rem;
     font-weight: bolder;
-    width: fit-content;
+    width: 100%;
   }
 
   .alert-success {
@@ -23,4 +24,43 @@
   
   .left {
     text-align: end;
+  }
+
+
+.comment {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  background-color: #f9f9f9;
+}
+.comment h3 {
+    font-size: 16px;
+    margin: 0;
+}
+.comment p {
+    font-size: 14px;
+}
+  .star {
+    font-size: 4vh;
+    cursor: pointer;
+  }
+   
+  .one {
+    color: rgb(255, 0, 0);
+  }
+   
+  .two {
+    color: rgb(255, 106, 0);
+  }
+   
+  .three {
+    color: rgb(255, 200, 0);
+  }
+   
+  .four {
+    color: rgb(30,144,255);
+  }
+   
+  .five {
+    color: rgb(24, 159, 14);
   }

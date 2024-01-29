@@ -32,6 +32,7 @@ urlpatterns = [
     path('main/delete_offert/<offert_id>/', main_views.delete_offert, name='delete_offert'),
     path('main/offert_details/<offert_id>/', main_views.offert_details, name='offert_details'),
     path('main/user_offert_detail/<offert_id>', main_views.user_offert_detail, name='user_offert_detail'),
+    path('main/save_opinion', main_views.save_opinion, name='save_opinion'),
     # user urls
     path('user/signup/', user_views.signup, name='login'),
     path('user/logout/', user_views.signout, name='logout'),
