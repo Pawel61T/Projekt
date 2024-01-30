@@ -27,13 +27,13 @@ $(document).ready(function() {
                 if(res.bool==true){
                     $('.comment-text').val('')
                     //Append element
-                    let newDate = new Date();
-                    let datetime = newDate.today() + ", " + newDate.timeNow();
+                    //let newDate = new Date();
+                    //let datetime = newDate.today() + ", " + newDate.timeNow();
                     let _html=   '<div class="card mb-2 mt-2 animate__animated animate__bounce">\
                     <div class="card-body">\
                         <p style="font-size: 1.3rem;">'+_comment+'</p>\
                         <p>\
-                          <b>Added by:</b> '+res.user_name+' '+res.user_surname+' on '+datetime+'<br/>\
+                          <b>Added by:</b> '+res.user_name+' '+res.user_surname+' on '+res.date+'<br/>\
                           <b>Rating:</b> '+rating+'/5\
                         </p>\
                     </div>\

@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
-from .models import Offer, Opinion
-from .forms import AddOffertForm, EditOfferForm
+from .models import Offer, Opinion, Reservation
+from .forms import AddOffertForm, EditOfferForm, MakeReservation
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from users.models import User
 from django.http import JsonResponse
+from datetime import datetime, timezone
 
 # Create your views here.
 def is_valid_queryparam(param):
@@ -87,8 +88,13 @@ def delete_offert(request, offert_id):
 def offert_details(request, offert_id):
     if request.method == 'GET':
         offert_in = Offer.objects.get(pk=offert_id)
-        opinions = Opinion.objects.filter(offert = offert_in) 
-    return render(request, 'main/offert_details.html', {'offert': offert_in, 'comments': opinions})
+        opinions = Opinion.objects.filter(offert = offert_in)
+        allow_reservation = False
+        if request.user.is_authenticated:
+            if request.user != offert_in.user:
+                allow_reservation = True 
+    return render(request, 'main/offert_details.html', {'offert': offert_in, 'comments': opinions,
+                'allow_reservation': allow_reservation})
 
 def user_offert_detail(request, offert_id):
     offert = Offer.objects.get(pk=offert_id)
@@ -111,5 +117,84 @@ def save_opinion(request):
             rating=rating_in,
             offert=offert_in,
             autor=user_in
-        )
-        return JsonResponse({'bool':True, 'user_name': request.user.first_name, 'user_surname': request.user.last_name})
+            )
+            now = datetime.now(timezone.utc)
+            date = now.strftime("%b. %d, %Y, %H:%M %p")
+            return JsonResponse({'bool':True, 'user_name': request.user.first_name, 'user_surname': request.user.last_name,
+                                'date': date })
+        
+def make_reservation(request, offert_id):
+    if request.method == 'POST':
+        form = MakeReservation(request.POST)
+        if form.is_valid():
+            _offert = Offer.objects.get(pk=offert_id)
+            _check_in = form.cleaned_data['check_in']
+            _check_out = form.cleaned_data['check_out']
+            _arrival_hour = form.cleaned_data['arrival_hour']
+            _user_in = request.user
+            Reservation.objects.create(
+                check_in = _check_in,
+                check_out = _check_out,
+                offert = _offert,
+                arrival_hour = _arrival_hour,
+                guest = _user_in
+            )
+            messages.success(request," Reservation made succesfully!")
+            return redirect("/main/user_reservations")       
+    else:
+        form = MakeReservation()
+    return render(request, 'main/make_reservation.html', {'form': form})
+
+def user_reservations(request):
+    reservations = Reservation.objects.filter(guest = request.user)
+    return render(request, 'main/user_reservations.html', {'reservations': reservations})
+
+def client_reservations(request):
+    offerts = Offer.objects.filter(user = request.user)
+    client_reservations = Reservation.objects.filter(offert__in = offerts)
+    all_reservations = client_reservations.exclude(is_rejected = True).count()
+    waiting_reservations = client_reservations.filter(is_waiting = True).count()
+    accepted_reservations = client_reservations.filter(is_accepted = True).count()
+    print(accepted_reservations)
+    return render(request, 'main/client_reservations.html', {'reservations' : client_reservations, 
+                'all_reservations': all_reservations, 'waiting_reservations': waiting_reservations,
+                'accepted_reservations': accepted_reservations})
+
+def accept_reservation(request, reservation_id):
+    reservation = Reservation.objects.get(pk = reservation_id)
+    reservation.is_accepted = True
+    reservation.is_waiting = False
+    reservation.save()
+    offerts = Offer.objects.filter(user = request.user)
+    client_reservations = Reservation.objects.filter(offert__in = offerts)
+    #return render(request, 'main/client_reservations.html', {'reservations' : client_reservations})
+    return redirect("/main/client_reservations")
+
+def reject_reservation(request, reservation_id):
+    reservation = Reservation.objects.get(pk = reservation_id)
+    reservation.is_rejected = True
+    reservation.is_waiting = False
+    reservation.save()
+    offerts = Offer.objects.filter(user = request.user)
+    client_reservations = Reservation.objects.filter(offert__in = offerts)
+    #return render(request, 'main/client_reservations.html', {'reservations' : client_reservations})
+    return redirect("/main/client_reservations")
+
+def delait_reservation(request, reservation_id):
+    reservation = Reservation.objects.get(pk = reservation_id)
+    
+    if reservation:
+        reservation.delete()
+
+    offerts = Offer.objects.filter(user = request.user)
+    client_reservations = Reservation.objects.filter(offert__in = offerts)
+    #return render(request, 'main/user_reservations.html', {'reservations' : client_reservations})
+    return redirect("/main/user_reservations")
+
+def contact_info_user(request, user_id):
+    user = User.objects.get(pk = user_id)
+    return render(request, 'main/contact_info_user.html', {'user' : user})
+
+def contact_info_client(request, user_id):
+    user = User.objects.get(pk = user_id)
+    return render(request, 'main/contact_info_user.html', {'user' : user})

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}
+    Offerts
+{% endblock title %}
+
+{% block body %}
+
+<form method="get">
+    <div class="d-flex justify-content-center mt-5">
+        <h2 class="mb-5">Your reservations</h2>
+    </div>
+    <br/>
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width: 5%">Id</th>
+                <th style="width: 20%">Check in</th>
+                <th style="width: 20%">Check out</th>
+                <th style="width: 20%">Arrival hour</th>
+                <th style="width: 15%">Status</th>
+                <th style="width: 20%">Manage</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservations %}
+            <tr>
+                <td>{{ reservation.id }}</td>
+                <td>{{ reservation.check_in }}</td>
+                <td>{{ reservation.check_out }}</td>
+                <td>{{ reservation.arrival_hour }}</td>
+                <td>
+                    {% if reservation.is_waiting %}
+                        Waiting
+                    {% endif %}
+                    {% if reservation.is_accepted %}
+                        Accepted
+                    {% endif %}
+                    {% if reservation.is_rejected %}
+                        Rejected
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="btn btn-dark" href="{% url 'contact_info_user' reservation.offert.user.id %}">Contact info</a> 
+                    <a class="btn btn-success" href="{% url 'user_offert_detail' reservation.offert.id %}">Offert details</a>
+                    {% if reservation.is_rejected %} 
+                    <a class="btn btn-danger" href="{% url 'delait_reservation' reservation.id %}" onclick="return confirm('Are you sure you want to delete?');">Delete</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</form>
+{% endblock body%}

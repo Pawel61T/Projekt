@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block title %}
+    Offerts
+{% endblock title %}
+
+{% block body %}
+<h2 class="mt-2 d-flex justify-content-center">Clients reservations</h2>
+<hr>
+<h3 class="mt-2 d-flex justify-content-center">Reservation stats</h3>
+<h5 class="mt-2 d-flex justify-content-center">Number of reservations: {{all_reservations}}</h5>
+<div class="row d-flex justify-content-center mt-2">
+    <div class="col-sm-2">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Waiting reservations</h5>
+          <div role="progressbar_waiting" style="--value: {{ waiting_reservations }}; --count_value: {{ all_reservations }}"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Accepted reservations</h5>
+          <div role="progressbar_accepted" style="--value: {{accepted_reservations}}; --count_value: {{ all_reservations }}"></div>
+        </div>
+      </div>
+    </div>
+</div>
+<hr>
+<form method="get">
+    <div class="d-flex justify-content-center mt-5">
+    </div>
+    <div class="d-flex justify-content-center mt-2">
+        <h5 class="mb-5">Waiting reservations</h5>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width: 2%">Id</th>
+                <th style="width: 10%">Check in</th>
+                <th style="width: 10%">Check out</th>
+                <th style="width: 8%">Arrival hour</th>
+                <th style="width: 10%">Status</th>
+                <th style="width: 10%">Price</th>
+                <th style="width: 20%">Address</th>
+                <th style="width: 30%">Manage</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservations %}
+            <tr>
+                {% if reservation.is_waiting %}
+                <td>{{ reservation.id }}</td>
+                <td>{{ reservation.check_in }}</td>
+                <td>{{ reservation.check_out }}</td>
+                <td>{{ reservation.arrival_hour }}</td>
+                <td>Waiting</td>
+                <td>{{reservation.offert.price }}</td>
+                <td>{{ reservation.offert.address1 }} 
+                    {% if reservation.offert.address2 %} {{ reservation.offert.address2 }} {% endif %}
+                    , {{reservation.offert.city}}, {{ reservation.offert.country}}</td>
+                <td>
+                    <a class="btn btn-dark" href="{% url 'contact_info_client' reservation.guest.id %}">Contact info</a>
+                    <a class="btn btn-success" href="{% url 'user_offert_detail' reservation.offert.id %}">Offert details</a>
+                    {% if reservation.is_waiting %}
+                    <a class="btn btn-primary" href="{% url 'accept_reservation' reservation.id %}">Accept</a>
+                    <a class="btn btn-danger" href="{% url 'reject_reservation' reservation.id %}">Reject</a> 
+                    {% endif %}
+                </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-center mt-5">
+        <h5 class="mb-5">Accepted reservations</h5>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width: 5%">Id</th>
+                <th style="width: 10%">Check in</th>
+                <th style="width: 10%">Check out</th>
+                <th style="width: 10%">Arrival hour</th>
+                <th style="width: 15%">Status</th>
+                <th style="width: 10%">Price</th>
+                <th style="width: 20%">Address</th>
+                <th style="width: 20%">Manage</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservations %}
+            <tr>
+                {% if reservation.is_accepted %}
+                <td>{{ reservation.id }}</td>
+                <td>{{ reservation.check_in }}</td>
+                <td>{{ reservation.check_out }}</td>
+                <td>{{ reservation.arrival_hour }}</td>
+                <td>Accepted</td>
+                <td>{{reservation.offert.price }}</td>
+                <td>{{ reservation.offert.address1 }} 
+                    {% if reservation.offert.address2 %} {{ reservation.offert.address2 }} {% endif %}
+                    , {{reservation.offert.city}}, {{ reservation.offert.country}}</td>
+                <td>
+                    <a class="btn btn-dark" href="{% url 'contact_info_client' reservation.guest.id %}">Contact info</a> 
+                    <a class="btn btn-success" href="{% url 'user_offert_detail' reservation.offert.id %}">Offert details</a>
+                </td>
+                {%endif%}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</form>
+{% endblock body%}

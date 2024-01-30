@@ -120,7 +120,11 @@
         </div>
     </div>
   </div>
-
+{%if allow_reservation%}
+<div class="d-flex justify-content-center mt-5">
+    <a class="btn btn-primary w-25" href="{% url 'make_reservation' offert.id %}">Make reservation</a>
+</div>
+{%endif%}
 <section class="text-center mt-5 mb-5 d-flex justify-content-center">
   {%if request.user.is_authenticated %}
   <div class="shadow-lg bg-white rounded w-50 p-3">

@@ -34,3 +34,14 @@ class Opinion(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     autor = models.ForeignKey(User, on_delete=models.CASCADE)
     offert = models.ForeignKey(Offer, on_delete=models.CASCADE)
+
+class Reservation(models.Model):
+    check_in = models.DateField(auto_now=False, auto_now_add=False)
+    check_out = models.DateField(auto_now=False, auto_now_add=False)
+    arrival_hour = models.TimeField()
+    offert = models.ForeignKey(Offer, on_delete = models.CASCADE, default = None)
+    guest = models.ForeignKey(User, on_delete= models.CASCADE)
+    is_waiting = models.BooleanField(default=True)
+    is_accepted = models.BooleanField(default=False)
+    is_rejected = models.BooleanField(default=False)
+    REQUIRED_FIELDS = ['check_in', 'check_out', 'arrival_hour']

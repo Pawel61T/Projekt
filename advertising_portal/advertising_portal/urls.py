@@ -33,6 +33,15 @@ urlpatterns = [
     path('main/offert_details/<offert_id>/', main_views.offert_details, name='offert_details'),
     path('main/user_offert_detail/<offert_id>', main_views.user_offert_detail, name='user_offert_detail'),
     path('main/save_opinion', main_views.save_opinion, name='save_opinion'),
+    # reservation urls
+    path('main/make_reservation/<offert_id>/', main_views.make_reservation, name='make_reservation'),
+    path('main/user_reservations/', main_views.user_reservations, name='user_reservations'),
+    path('main/client_reservations/', main_views.client_reservations, name= 'client_reservations'),
+    path('main/accept_reservation/<reservation_id>', main_views.accept_reservation, name='accept_reservation'),
+    path('main/reject_reservation/<reservation_id>', main_views.reject_reservation, name='reject_reservation'),
+    path('main/delait_reservation/<reservation_id>', main_views.delait_reservation, name='delait_reservation'),
+    path('main/contact_info_user/<user_id>', main_views.contact_info_user, name='contact_info_user'),
+    path('main/contact_info_client/<user_id>', main_views.contact_info_client, name='contact_info_client'),
     # user urls
     path('user/signup/', user_views.signup, name='login'),
     path('user/logout/', user_views.signout, name='logout'),
